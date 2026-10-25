@@ -78,9 +78,9 @@ export default function Inventory() {
   return (
     <div className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-3">
-        <Stat label="Total products" value={products.length} />
-        <Stat label="Categories" value={categories.length} />
-        <Stat label="Top category" value={topCategory} />
+        <Stat label="Total products" value={products.length} onClick={() => setCat("All")} />
+        <Stat label="Categories" value={categories.length} onClick={() => setCat("All")} />
+        <Stat label="Top category" value={topCategory} onClick={() => setCat(categories.includes(topCategory) ? topCategory : "All")} />
       </div>
       <Card title="Predictive product inventory"
         action={<div className="flex gap-2">
