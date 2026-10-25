@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg_ph" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f1f5f9"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="16" fill="url(#bg_ph)"/>
+  <!-- 3D Box / Package -->
+  <path d="M60 28 L94 45 L60 62 L26 45 Z" fill="#94a3b8"/>
+  <path d="M26 45 L60 62 L60 96 L26 79 Z" fill="#64748b"/>
+  <path d="M94 45 L60 62 L60 96 L94 79 Z" fill="#475569"/>
+  <!-- Tape -->
+  <path d="M52 32 L68 40 L68 46 L52 38 Z" fill="#cbd5e1" opacity="0.8"/>
+  <path d="M58 61 L62 63 L62 96 L58 94 Z" fill="#cbd5e1" opacity="0.6"/>
+</svg>

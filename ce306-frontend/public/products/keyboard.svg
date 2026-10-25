@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg_kb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0fdf4"/>
+      <stop offset="100%" stop-color="#dcfce7"/>
+    </linearGradient>
+    <linearGradient id="body_kb" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="rgb_glow" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="50%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="16" fill="url(#bg_kb)"/>
+  <!-- Keyboard Case -->
+  <rect x="15" y="36" width="90" height="52" rx="6" fill="url(#body_kb)"/>
+  <!-- RGB Edge Glow -->
+  <rect x="17" y="38" width="86" height="2" rx="1" fill="url(#rgb_glow)" opacity="0.8"/>
+  <!-- Keycaps Row 1 -->
+  <rect x="20" y="44" width="7" height="6" rx="1" fill="#38bdf8"/>
+  <rect x="29" y="44" width="7" height="6" rx="1" fill="#475569"/>
+  <rect x="38" y="44" width="7" height="6" rx="1" fill="#475569"/>
+  <rect x="47" y="44" width="7" height="6" rx="1" fill="#475569"/>
+  <rect x="56" y="44" width="7" height="6" rx="1" fill="#475569"/>
+  <rect x="65" y="44" width="7" height="6" rx="1" fill="#475569"/>
+  <rect x="74" y="44" width="7" height="6" rx="1" fill="#475569"/>
+  <rect x="83" y="44" width="7" height="6" rx="1" fill="#475569"/>
+  <rect x="92" y="44" width="9" height="6" rx="1" fill="#a855f7"/>
+  <!-- Keycaps Row 2 -->
+  <rect x="20" y="52" width="10" height="6" rx="1" fill="#334155"/>
+  <rect x="32" y="52" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="41" y="52" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="50" y="52" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="59" y="52" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="68" y="52" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="77" y="52" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="86" y="52" width="15" height="6" rx="1" fill="#ec4899"/>
+  <!-- Keycaps Row 3 -->
+  <rect x="20" y="60" width="12" height="6" rx="1" fill="#334155"/>
+  <rect x="34" y="60" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="43" y="60" width="7" height="6" rx="1" fill="#38bdf8"/>
+  <rect x="52" y="60" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="61" y="60" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="70" y="60" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="79" y="60" width="7" height="6" rx="1" fill="#f8fafc"/>
+  <rect x="88" y="60" width="13" height="6" rx="1" fill="#334155"/>
+  <!-- Keycaps Row 4 (Spacebar) -->
+  <rect x="20" y="68" width="14" height="7" rx="1.5" fill="#38bdf8"/>
+  <rect x="36" y="68" width="40" height="7" rx="1.5" fill="#f1f5f9"/>
+  <rect x="78" y="68" width="10" height="7" rx="1.5" fill="#a855f7"/>
+  <rect x="90" y="68" width="11" height="7" rx="1.5" fill="#ec4899"/>
+</svg>

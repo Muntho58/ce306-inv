@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { useApp, stockStats } from "../context/AppContext";
-import { Card } from "../components/ui";
+import { Card, ProductImage } from "../components/ui";
 import { Bars } from "../components/charts";
 import { demandByCategory } from "../data/seed";
 import {
@@ -66,7 +66,10 @@ export default function Dashboard() {
         <ul className="divide-y divide-neutral-200">
           {top.map((p) => (
             <li key={p.id} className="flex items-center justify-between py-3">
-              <div><p className="font-medium">{p.name}</p><p className="text-xs text-neutral-500">ID: {p.sku}</p></div>
+              <div className="flex items-center gap-3">
+                <ProductImage src={p.image} name={p.name} size="size-10" />
+                <div><p className="font-medium">{p.name}</p><p className="text-xs text-neutral-500">ID: {p.sku}</p></div>
+              </div>
               <div className="text-right"><p className="font-semibold">${p.price}</p><p className="text-xs text-neutral-500">{counts[p.id] || 0} Orders</p></div>
             </li>
           ))}

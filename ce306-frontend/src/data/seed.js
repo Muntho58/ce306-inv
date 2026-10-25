@@ -1,12 +1,12 @@
 export const categories = ["Perfume", "Accessories", "Fashion", "House Decor", "Electronics"];
 
 export const seedProducts = [
-  { id: 1, sku: "RT15246630", name: "Blossom mist soft rose", category: "Perfume", currentStock: 12, predictedStock: 100, price: 45, status: "Active", totalSales: 9856 },
-  { id: 2, sku: "RT15246540", name: "Classic leather chrono", category: "Accessories", currentStock: 150, predictedStock: 450, price: 120, status: "Active", totalSales: 495 },
-  { id: 3, sku: "RT15249828", name: "Chromium bag", category: "Fashion", currentStock: 129, predictedStock: 189, price: 80, status: "Active", totalSales: 7890 },
-  { id: 4, sku: "RT15244830", name: "Sofa coco single", category: "House Decor", currentStock: 65, predictedStock: 88, price: 300, status: "Active", totalSales: 125 },
-  { id: 5, sku: "RT15243690", name: "Golden bracelet plated", category: "Accessories", currentStock: 0, predictedStock: 60, price: 65, status: "Active", totalSales: 310 },
-  { id: 6, sku: "RT15243790", name: "Mechanical keyboard 80", category: "Electronics", currentStock: 8, predictedStock: 40, price: 199.99, status: "Inactive", totalSales: 220 },
+  { id: 1, sku: "RT15246630", name: "Blossom mist soft rose", category: "Perfume", currentStock: 12, predictedStock: 100, price: 45, status: "Active", totalSales: 9856, image: "/products/perfume.svg" },
+  { id: 2, sku: "RT15246540", name: "Classic leather chrono", category: "Accessories", currentStock: 150, predictedStock: 450, price: 120, status: "Active", totalSales: 495, image: "/products/chrono.svg" },
+  { id: 3, sku: "RT15249828", name: "Chromium bag", category: "Fashion", currentStock: 129, predictedStock: 189, price: 80, status: "Active", totalSales: 7890, image: "/products/bag.svg" },
+  { id: 4, sku: "RT15244830", name: "Sofa coco single", category: "House Decor", currentStock: 65, predictedStock: 88, price: 300, status: "Active", totalSales: 125, image: "/products/sofa.svg" },
+  { id: 5, sku: "RT15243690", name: "Golden bracelet plated", category: "Accessories", currentStock: 0, predictedStock: 60, price: 65, status: "Active", totalSales: 310, image: "/products/bracelet.svg" },
+  { id: 6, sku: "RT15243790", name: "Mechanical keyboard 80", category: "Electronics", currentStock: 8, predictedStock: 40, price: 199.99, status: "Inactive", totalSales: 220, image: "/products/keyboard.svg" },
 ];
 
 export const customers = [

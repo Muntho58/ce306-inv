@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg_bracelet" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff7ed"/>
+      <stop offset="100%" stop-color="#ffedd5"/>
+    </linearGradient>
+    <linearGradient id="gold_chain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="35%" stop-color="#facc15"/>
+      <stop offset="70%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#a16207"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="16" fill="url(#bg_bracelet)"/>
+  <!-- Circular Bangle / Chain -->
+  <ellipse cx="60" cy="60" rx="36" ry="30" fill="none" stroke="url(#gold_chain)" stroke-width="6"/>
+  <!-- Decorative Beads / Links -->
+  <circle cx="60" cy="30" r="5" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+  <circle cx="96" cy="60" r="5" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+  <circle cx="60" cy="90" r="5" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+  <circle cx="24" cy="60" r="5" fill="#fef08a" stroke="#ca8a04" stroke-width="1.5"/>
+  <!-- Charm / Pendant -->
+  <path d="M60 90 L60 102 M55 106 L60 101 L65 106 L60 111 Z" stroke="#ca8a04" stroke-width="2" fill="#fef08a"/>
+  <!-- Sparkles -->
+  <path d="M38 34 Q38 38 42 38 Q38 38 38 42 Q38 38 34 38 Q38 38 38 34 Z" fill="#eab308"/>
+  <path d="M82 36 Q82 39 85 39 Q82 39 82 42 Q82 39 79 39 Q82 39 82 36 Z" fill="#eab308"/>
+  <path d="M84 78 Q84 81 87 81 Q84 81 84 84 Q84 81 81 81 Q84 81 84 78 Z" fill="#eab308"/>
+</svg>

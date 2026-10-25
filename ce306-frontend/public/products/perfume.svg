@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff1f2"/>
+      <stop offset="100%" stop-color="#ffe4e6"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fda4af"/>
+      <stop offset="50%" stop-color="#fb7185"/>
+      <stop offset="100%" stop-color="#e11d48"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="16" fill="url(#bg)"/>
+  <!-- Cap & Spray -->
+  <rect x="52" y="22" width="16" height="18" rx="3" fill="url(#gold)"/>
+  <rect x="56" y="16" width="8" height="6" rx="2" fill="url(#gold)"/>
+  <circle cx="60" cy="19" r="1.5" fill="#713f12"/>
+  <!-- Mist -->
+  <circle cx="72" cy="16" r="1.5" fill="#f43f5e" opacity="0.6"/>
+  <circle cx="78" cy="13" r="2" fill="#f43f5e" opacity="0.4"/>
+  <circle cx="84" cy="15" r="1" fill="#f43f5e" opacity="0.5"/>
+  <!-- Bottle Neck -->
+  <rect x="49" y="40" width="22" height="6" rx="2" fill="url(#gold)"/>
+  <!-- Bottle Body -->
+  <rect x="35" y="46" width="50" height="56" rx="10" fill="url(#glass)"/>
+  <!-- Glass Reflection -->
+  <path d="M42 52 Q44 74 44 94" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.6" fill="none"/>
+  <!-- Label -->
+  <rect x="45" y="62" width="30" height="24" rx="4" fill="#ffffff" opacity="0.9"/>
+  <line x1="50" y1="70" x2="70" y2="70" stroke="#fb7185" stroke-width="2" stroke-linecap="round"/>
+  <line x1="53" y1="76" x2="67" y2="76" stroke="#fda4af" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,9 @@
+{
+  "name": "ce306-inv",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix ce306-frontend run dev",
+    "build": "npm --prefix ce306-frontend run build",
+    "preview": "npm --prefix ce306-frontend run preview"
+  }
+}

@@ -13,7 +13,16 @@ const DEFAULT_USER = { name: "Kira Yamato", email: "admin@example.com", avatar: 
 export function AppProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(() => load("inv_auth", false));
   const [user, setUser] = useState(() => load("inv_user", DEFAULT_USER));
-  const [products, setProducts] = useState(() => load("inv_products", seedProducts));
+  const [products, setProducts] = useState(() => {
+    const list = load("inv_products", seedProducts);
+    return list.map((p) => {
+      if (!p.image) {
+        const seed = seedProducts.find((s) => s.id === p.id || s.sku === p.sku);
+        if (seed?.image) return { ...p, image: seed.image };
+      }
+      return p;
+    });
+  });
   const [orders, setOrders] = useState(() => load("inv_orders", seedOrders));
   const [query, setQuery] = useState("");
 

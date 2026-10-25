@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg_chrono" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fdf4ff"/>
+      <stop offset="100%" stop-color="#fae8ff"/>
+    </linearGradient>
+    <linearGradient id="leather" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#78350f"/>
+      <stop offset="50%" stop-color="#92400e"/>
+      <stop offset="100%" stop-color="#78350f"/>
+    </linearGradient>
+    <linearGradient id="dial" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f1f5f9"/>
+    </linearGradient>
+    <linearGradient id="case" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#eab308"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="16" fill="url(#bg_chrono)"/>
+  <!-- Leather Strap -->
+  <rect x="47" y="10" width="26" height="100" rx="4" fill="url(#leather)"/>
+  <!-- Strap Stitching -->
+  <line x1="49" y1="12" x2="49" y2="108" stroke="#d97706" stroke-width="1" stroke-dasharray="2,2"/>
+  <line x1="71" y1="12" x2="71" y2="108" stroke="#d97706" stroke-width="1" stroke-dasharray="2,2"/>
+  <!-- Watch Case Outer -->
+  <circle cx="60" cy="60" r="34" fill="url(#case)"/>
+  <!-- Watch Crown -->
+  <rect x="92" y="56" width="5" height="8" rx="2" fill="url(#case)"/>
+  <!-- Dial Bezel -->
+  <circle cx="60" cy="60" r="30" fill="#1e293b"/>
+  <!-- Dial Face -->
+  <circle cx="60" cy="60" r="28" fill="url(#dial)"/>
+  <!-- Hour Markers -->
+  <circle cx="60" cy="36" r="1.5" fill="#1e293b"/>
+  <circle cx="84" cy="60" r="1.5" fill="#1e293b"/>
+  <circle cx="60" cy="84" r="1.5" fill="#1e293b"/>
+  <circle cx="36" cy="60" r="1.5" fill="#1e293b"/>
+  <!-- Chrono Sub-dials -->
+  <circle cx="53" cy="56" r="5" stroke="#94a3b8" stroke-width="0.8" fill="none"/>
+  <circle cx="67" cy="56" r="5" stroke="#94a3b8" stroke-width="0.8" fill="none"/>
+  <!-- Hands -->
+  <line x1="60" y1="60" x2="60" y2="42" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+  <line x1="60" y1="60" x2="74" y2="60" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="60" y1="60" x2="50" y2="72" stroke="#ef4444" stroke-width="1" stroke-linecap="round"/>
+  <circle cx="60" cy="60" r="2.5" fill="#ca8a04"/>
+</svg>

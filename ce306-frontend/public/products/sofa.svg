@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg_sofa" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+    <linearGradient id="coco" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="50%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#b45309"/>
+    </linearGradient>
+    <linearGradient id="cushion" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef3c7"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="16" fill="url(#bg_sofa)"/>
+  <!-- Legs -->
+  <line x1="34" y1="88" x2="28" y2="104" stroke="#78350f" stroke-width="4" stroke-linecap="round"/>
+  <line x1="86" y1="88" x2="92" y2="104" stroke="#78350f" stroke-width="4" stroke-linecap="round"/>
+  <!-- Backrest -->
+  <rect x="30" y="32" width="60" height="46" rx="14" fill="url(#coco)"/>
+  <!-- Backrest Tufting/Indentations -->
+  <circle cx="48" cy="48" r="2.5" fill="#92400e"/>
+  <circle cx="72" cy="48" r="2.5" fill="#92400e"/>
+  <!-- Seat Cushion -->
+  <rect x="24" y="66" width="72" height="22" rx="8" fill="url(#cushion)"/>
+  <!-- Left Armrest -->
+  <rect x="20" y="52" width="14" height="32" rx="7" fill="url(#coco)"/>
+  <!-- Right Armrest -->
+  <rect x="86" y="52" width="14" height="32" rx="7" fill="url(#coco)"/>
+</svg>

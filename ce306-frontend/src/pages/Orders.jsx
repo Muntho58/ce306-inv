@@ -25,10 +25,38 @@ export default function Orders() {
   return (
     <div className="space-y-4">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Stat label="Overall orders" value={orders.length} delta={12.08} />
-        <Stat label="Processed" value={count("Accepted")} delta={24.09} active />
-        <Stat label="Delivered" value={count("Delivered")} delta={30.12} />
-        <Stat label="Return loss" value={`${loss} USD`} delta={-10.3} />
+        <Stat
+          label="Overall orders"
+          value={orders.length}
+          delta={12.08}
+          color="brand"
+          active={filter === "All"}
+          onClick={() => setFilter("All")}
+        />
+        <Stat
+          label="Processed"
+          value={count("Accepted")}
+          delta={24.09}
+          color="emerald"
+          active={filter === "Accepted"}
+          onClick={() => setFilter(filter === "Accepted" ? "All" : "Accepted")}
+        />
+        <Stat
+          label="Delivered"
+          value={count("Delivered")}
+          delta={30.12}
+          color="indigo"
+          active={filter === "Delivered"}
+          onClick={() => setFilter(filter === "Delivered" ? "All" : "Delivered")}
+        />
+        <Stat
+          label="Return loss"
+          value={`${loss} USD`}
+          delta={-10.3}
+          color="rose"
+          active={filter === "Returned"}
+          onClick={() => setFilter(filter === "Returned" ? "All" : "Returned")}
+        />
       </div>
       <Card title="All orders" action={
         <select aria-label="Filter by status" value={filter} onChange={(e) => setFilter(e.target.value)} className="rounded-full border border-neutral-300 px-3 py-2 text-sm">
