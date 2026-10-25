@@ -1,17 +1,54 @@
 import { useState } from "react";
 import { useApp } from "../context/AppContext";
-import { Badge, Card, Modal, Stat, field } from "../components/ui";
+import { Badge, Card, Modal, Stat, ProductImage, field } from "../components/ui";
 import { categories } from "../data/seed";
-import { filterProducts, getTopCategory, formatNumber } from "../utils";
+import { filterProducts, getTopCategory, formatNumber, readFileAsDataURL } from "../utils";
 
-const empty = { name: "", sku: "", category: categories[0], currentStock: 0, predictedStock: 0, price: 0 };
+const empty = { name: "", sku: "", category: categories[0], currentStock: 0, predictedStock: 0, price: 0, image: "" };
 
 function ProductForm({ initial, onSave, onClose }) {
   const [f, setF] = useState(initial);
+  const [imgError, setImgError] = useState("");
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
   const num = (k) => (e) => setF({ ...f, [k]: Math.max(0, Number(e.target.value)) });
+
+  function pickImage(e) {
+    const file = e.target.files?.[0];
+    readFileAsDataURL(
+      file,
+      (image) => {
+        setF((prev) => ({ ...prev, image }));
+        setImgError("");
+      },
+      (err) => setImgError(err)
+    );
+  }
+
   return (
     <form onSubmit={(e) => { e.preventDefault(); onSave({ ...f, name: f.name.trim(), sku: f.sku.trim() }); }} className="space-y-3">
+      <div>
+        <label className="block text-sm font-medium mb-1">Product image</label>
+        <div className="flex items-center gap-3">
+          <ProductImage src={f.image} name={f.name || "Product"} size="size-16" />
+          <div className="space-y-1">
+            <label className="inline-block cursor-pointer rounded-lg bg-neutral-100 hover:bg-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-700 transition-colors">
+              Upload picture
+              <input type="file" accept="image/*" onChange={pickImage} className="sr-only" />
+            </label>
+            {f.image && (
+              <button
+                type="button"
+                onClick={() => setF((prev) => ({ ...prev, image: "" }))}
+                className="ml-2 text-xs text-red-600 hover:underline"
+              >
+                Remove
+              </button>
+            )}
+            <p className="text-[11px] text-neutral-400">PNG, JPG or SVG up to 1MB</p>
+          </div>
+        </div>
+        {imgError && <p className="text-xs text-red-600 mt-1">{imgError}</p>}
+      </div>
       <label className="block text-sm">Product name<input required className={`${field} mt-1`} value={f.name} onChange={set("name")} /></label>
       <label className="block text-sm">SKU<input required className={`${field} mt-1`} value={f.sku} onChange={set("sku")} placeholder="RT15246630" /></label>
       <label className="block text-sm">Category
@@ -57,7 +94,15 @@ export default function Inventory() {
             <tbody>
               {rows.map((p) => (
                 <tr key={p.id} className="border-t border-neutral-200">
-                  <td className="py-3 pr-3"><p className="font-medium">{p.name}</p><p className="text-xs text-neutral-500">ID: {p.sku}</p></td>
+                  <td className="py-3 pr-3">
+                    <div className="flex items-center gap-3">
+                      <ProductImage src={p.image} name={p.name} size="size-11" />
+                      <div>
+                        <p className="font-medium">{p.name}</p>
+                        <p className="text-xs text-neutral-500">ID: {p.sku}</p>
+                      </div>
+                    </div>
+                  </td>
                   <td className="pr-3">{p.category}</td>
                   <td className={`pr-3 ${p.currentStock === 0 ? "font-semibold text-red-600" : ""}`}>{p.currentStock} Boxes</td>
                   <td className="pr-3">{p.predictedStock} Boxes</td>
