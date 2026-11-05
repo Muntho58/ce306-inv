@@ -1,0 +1,1 @@
+CREATE DATABASE ce306_inventory;
