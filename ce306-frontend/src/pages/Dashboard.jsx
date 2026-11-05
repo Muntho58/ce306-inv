@@ -16,10 +16,14 @@ import {
 export default function Dashboard() {
   const { products, orders } = useApp();
   const [tab, setTab] = useState("Fashion");
+  const [selectedRevenueMonth, setSelectedRevenueMonth] = useState(null);
 
   const s = stockStats(products);
   const revenue = calculateTotalRevenue(orders);
   const byMonth = getRevenueByMonth(orders);
+  const displayedRevenue = selectedRevenueMonth
+    ? byMonth[selectedRevenueMonth]
+    : revenue;
   const counts = getProductOrderCounts(orders);
   const top = getTopProducts(products, orders, 3);
   const stockCards = getStockCards(s);
@@ -27,9 +31,17 @@ export default function Dashboard() {
   return (
     <div className="grid gap-4 lg:grid-cols-3">
       <Card title="Sales revenue" className="lg:col-span-2">
-        <p className="text-4xl font-bold">{formatMoney(revenue)}</p>
-        <p className="mb-4 text-sm text-neutral-500">Revenue from orders that were not returned</p>
-        <Bars data={Object.entries(byMonth)} />
+        <p className="text-4xl font-bold">{formatMoney(displayedRevenue)}</p>
+        <p className="mb-4 text-sm text-neutral-500">
+          {selectedRevenueMonth
+            ? `Revenue for ${selectedRevenueMonth} (click again to show total)`
+            : "Revenue from orders that were not returned (click a month to filter)"}
+        </p>
+        <Bars
+          data={Object.entries(byMonth)}
+          selected={selectedRevenueMonth}
+          onSelect={(month) => setSelectedRevenueMonth((selected) => selected === month ? null : month)}
+        />
       </Card>
 
       <div className="space-y-4">

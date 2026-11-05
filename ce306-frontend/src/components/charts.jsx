@@ -1,15 +1,36 @@
-export function Bars({ data, height = 180, highlight }) {
+export function Bars({ data, height = 180, highlight, selected, onSelect }) {
   const max = Math.max(1, ...data.map(([, v]) => v));
-  const top = highlight ?? data.findIndex(([, v]) => v === max);
+  const top = selected
+    ? data.findIndex(([label]) => label === selected)
+    : highlight ?? data.findIndex(([, v]) => v === max);
   return (
     <div className="flex items-end gap-3" style={{ height }}>
-      {data.map(([label, value], i) => (
-        <div key={label} className="flex h-full flex-1 flex-col items-center justify-end gap-1">
-          <span className="text-xs font-medium">{value}</span>
-          <div className={`w-full rounded-t-xl ${i === top ? "bg-brand" : "bg-neutral-200"}`} style={{ height: `${(value / max) * 75}%` }} />
-          <span className="text-xs text-neutral-500">{label}</span>
-        </div>
-      ))}
+      {data.map(([label, value], i) => {
+        const className = `flex h-full flex-1 flex-col items-center justify-end gap-1 ${
+          onSelect ? "cursor-pointer rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand" : ""
+        }`;
+        const contents = (
+          <>
+            <span className="text-xs font-medium">{value}</span>
+            <div className={`w-full rounded-t-xl ${i === top ? "bg-brand" : "bg-neutral-200"}`} style={{ height: `${(value / max) * 75}%` }} />
+            <span className="text-xs text-neutral-500">{label}</span>
+          </>
+        );
+        return onSelect ? (
+          <button
+            key={label}
+            type="button"
+            className={className}
+            aria-label={`${label}: ${value}`}
+            aria-pressed={selected === label}
+            onClick={() => onSelect(label)}
+          >
+            {contents}
+          </button>
+        ) : (
+          <div key={label} className={className}>{contents}</div>
+        );
+      })}
     </div>
   );
 }
