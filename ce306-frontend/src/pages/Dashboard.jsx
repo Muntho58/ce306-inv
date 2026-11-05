@@ -15,7 +15,21 @@ import {
 
 export default function Dashboard() {
   const { products, orders } = useApp();
-  const [tab, setTab] = useState("Fashion");
+  const topDemandCategories = Object.entries(demandByCategory)
+    .map(([category, monthlyDemand], index) => ({
+      category,
+      monthlyDemand,
+      totalDemand: monthlyDemand.reduce((total, [, value]) => total + value, 0),
+      index,
+    }))
+    .sort((a, b) => b.totalDemand - a.totalDemand || a.index - b.index)
+    .slice(0, 3);
+  const [selectedDemandCategory, setSelectedDemandCategory] = useState(null);
+  const activeDemandCategory = topDemandCategories.some(
+    ({ category }) => category === selectedDemandCategory
+  )
+    ? selectedDemandCategory
+    : topDemandCategories[0]?.category;
   const [selectedRevenueMonth, setSelectedRevenueMonth] = useState(null);
 
   const s = stockStats(products);
@@ -68,10 +82,10 @@ export default function Dashboard() {
       </Card>
 
       <Card title="Top market demand" className="lg:col-span-2"
-        action={<div role="tablist" className="flex gap-1">{Object.keys(demandByCategory).map((c) => (
-          <button key={c} role="tab" aria-selected={tab === c} onClick={() => setTab(c)}
-            className={`rounded-full px-3 py-1 text-sm ${tab === c ? "bg-brand text-white" : "bg-neutral-100"}`}>{c}</button>))}</div>}>
-        <Bars data={demandByCategory[tab]} height={160} />
+        action={<div role="tablist" className="flex gap-1">{topDemandCategories.map(({ category }) => (
+          <button key={category} role="tab" aria-selected={activeDemandCategory === category} onClick={() => setSelectedDemandCategory(category)}
+            className={`rounded-full px-3 py-1 text-sm ${activeDemandCategory === category ? "bg-brand text-white" : "bg-neutral-100"}`}>{category}</button>))}</div>}>
+        {activeDemandCategory && <Bars data={demandByCategory[activeDemandCategory]} height={160} />}
       </Card>
 
       <Card title="Top product recommendation" action={<Link to="/inventory" className="rounded-full border border-neutral-300 px-3 py-1 text-sm">View all</Link>} className="lg:col-span-3">
