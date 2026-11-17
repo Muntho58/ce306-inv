@@ -6,7 +6,7 @@ import { filterProducts, getTopCategory, formatNumber, readFileAsDataURL } from 
 
 const empty = { name: "", sku: "", category: categories[0], currentStock: 0, predictedStock: 0, price: 0, image: "" };
 
-function ProductForm({ initial, onSave, onClose }) {
+function ProductForm({ initial, onSave, onClose, error, saving }) {
   const [f, setF] = useState(initial);
   const [imgError, setImgError] = useState("");
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
@@ -59,9 +59,10 @@ function ProductForm({ initial, onSave, onClose }) {
         <label className="block text-sm">Predicted<input type="number" min="0" className={`${field} mt-1`} value={f.predictedStock} onChange={num("predictedStock")} /></label>
         <label className="block text-sm">Price ($)<input type="number" min="0" step="0.01" className={`${field} mt-1`} value={f.price} onChange={num("price")} /></label>
       </div>
+      {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
       <div className="flex justify-end gap-2 pt-2">
         <button type="button" onClick={onClose} className="rounded-full border border-neutral-300 px-5 py-2 text-sm">Cancel</button>
-        <button className="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white">Save product</button>
+        <button disabled={saving} className="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white disabled:opacity-60">{saving ? "Saving..." : "Save product"}</button>
       </div>
     </form>
   );
@@ -71,6 +72,8 @@ export default function Inventory() {
   const { products, query, saveProduct } = useApp();
   const [cat, setCat] = useState("All");
   const [editing, setEditing] = useState(null);
+  const [saveError, setSaveError] = useState("");
+  const [saving, setSaving] = useState(false);
 
   const rows = filterProducts(products, cat, query);
   const topCategory = getTopCategory(categories, products);
@@ -118,7 +121,24 @@ export default function Inventory() {
       </Card>
       {editing && (
         <Modal title={editing.id ? "Update product" : "Add product"} onClose={() => setEditing(null)}>
-          <ProductForm initial={editing} onClose={() => setEditing(null)} onSave={(p) => { saveProduct(p); setEditing(null); }} />
+          <ProductForm
+            initial={editing}
+            onClose={() => setEditing(null)}
+            error={saveError}
+            saving={saving}
+            onSave={async (product) => {
+              setSaving(true);
+              setSaveError("");
+              try {
+                await saveProduct(product);
+                setEditing(null);
+              } catch (error) {
+                setSaveError(error.message);
+              } finally {
+                setSaving(false);
+              }
+            }}
+          />
         </Modal>
       )}
     </div>

@@ -54,9 +54,9 @@ export default function Settings() {
             <div className="flex items-center justify-between"><span>SMS notification</span><Toggle label="SMS notification" checked={form.notifications.sms} onChange={setN("sms")} /></div>
           </div>
         </Card>
-        <Card title="Demo data">
-          <p className="mb-3 text-sm text-neutral-600">Products and orders are saved in your browser. Reset to start from the sample data again.</p>
-          <button type="button" onClick={() => { resetData(); setMsg("Sample data restored"); }} className="rounded-full border border-neutral-300 px-5 py-2 text-sm">Reset sample data</button>
+        <Card title="ข้อมูลฐานข้อมูล">
+          <p className="mb-3 text-sm text-neutral-600">สินค้าและคำสั่งซื้อจัดเก็บไว้ใน PostgreSQL โหลดข้อมูลล่าสุดจากฐานข้อมูลได้ที่นี่</p>
+          <button type="button" onClick={async () => { setMsg(await resetData() ? "โหลดข้อมูลจากฐานข้อมูลแล้ว" : "โหลดข้อมูลไม่สำเร็จ กรุณาตรวจสอบการเชื่อมต่อ"); }} className="rounded-full border border-neutral-300 px-5 py-2 text-sm">โหลดข้อมูลจากฐานข้อมูล</button>
         </Card>
       </div>
       <div className="flex items-center gap-4 lg:col-span-2">

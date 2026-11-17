@@ -21,7 +21,7 @@ const link = ({ isActive }) =>
   `flex items-center gap-3 rounded-full px-5 py-3 text-sm font-medium transition-colors ${isActive ? "bg-white/20 text-white" : "text-white/70 hover:text-white hover:bg-white/10"}`;
 
 export default function Layout() {
-  const { loggedIn, user, logout, query, setQuery } = useApp();
+  const { loggedIn, user, logout, query, setQuery, dataLoading, dataError, refreshData } = useApp();
   const { pathname } = useLocation();
   if (!loggedIn) return <Navigate to="/login" replace />;
 
@@ -63,6 +63,13 @@ export default function Layout() {
             <div className="hidden text-sm sm:block"><p className="font-semibold">{user.name}</p><p className="text-neutral-500">{user.email}</p></div>
           </div>
         </header>
+        {dataLoading && <p role="status" className="mb-4 rounded-lg bg-blue-50 px-4 py-3 text-sm text-blue-800">กำลังโหลดข้อมูลจากฐานข้อมูล...</p>}
+        {dataError && (
+          <div role="alert" className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-lg bg-red-50 px-4 py-3 text-sm text-red-800">
+            <span>เชื่อมต่อฐานข้อมูลไม่สำเร็จ: {dataError}</span>
+            <button onClick={refreshData} className="font-semibold underline">ลองอีกครั้ง</button>
+          </div>
+        )}
         <Outlet />
       </main>
     </div>

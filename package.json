@@ -3,7 +3,13 @@
   "private": true,
   "scripts": {
     "dev": "npm --prefix ce306-frontend run dev",
+    "server": "node --watch server/server.mjs",
     "build": "npm --prefix ce306-frontend run build",
     "preview": "npm --prefix ce306-frontend run preview"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "pg": "^8.13.1"
   }
 }

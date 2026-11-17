@@ -1,5 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { seedProducts, seedOrders } from "../data/seed";
+import {
+  getOrders,
+  getProducts,
+  saveProduct as saveProductRequest,
+  updateOrderStatus,
+} from "../api";
 
 const Ctx = createContext(null);
 export const useApp = () => useContext(Ctx);
@@ -13,23 +18,32 @@ const DEFAULT_USER = { name: "Kira Yamato", email: "admin@example.com", avatar: 
 export function AppProvider({ children }) {
   const [loggedIn, setLoggedIn] = useState(() => load("inv_auth", false));
   const [user, setUser] = useState(() => load("inv_user", DEFAULT_USER));
-  const [products, setProducts] = useState(() => {
-    const list = load("inv_products", seedProducts);
-    return list.map((p) => {
-      if (!p.image) {
-        const seed = seedProducts.find((s) => s.id === p.id || s.sku === p.sku);
-        if (seed?.image) return { ...p, image: seed.image };
-      }
-      return p;
-    });
-  });
-  const [orders, setOrders] = useState(() => load("inv_orders", seedOrders));
+  const [products, setProducts] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [dataLoading, setDataLoading] = useState(true);
+  const [dataError, setDataError] = useState("");
   const [query, setQuery] = useState("");
 
   useEffect(() => localStorage.setItem("inv_auth", JSON.stringify(loggedIn)), [loggedIn]);
   useEffect(() => localStorage.setItem("inv_user", JSON.stringify(user)), [user]);
-  useEffect(() => localStorage.setItem("inv_products", JSON.stringify(products)), [products]);
-  useEffect(() => localStorage.setItem("inv_orders", JSON.stringify(orders)), [orders]);
+
+  const refreshData = async () => {
+    setDataLoading(true);
+    setDataError("");
+    try {
+      const [productList, orderList] = await Promise.all([getProducts(), getOrders()]);
+      setProducts(productList);
+      setOrders(orderList);
+      return true;
+    } catch (error) {
+      setDataError(error.message);
+      return false;
+    } finally {
+      setDataLoading(false);
+    }
+  };
+
+  useEffect(() => { refreshData(); }, []);
 
   const login = (email, password) => {
     if (email === "admin@example.com" && password === "admin123") { setLoggedIn(true); return null; }
@@ -37,33 +51,38 @@ export function AppProvider({ children }) {
   };
   const logout = () => setLoggedIn(false);
 
-  const saveProduct = (p) =>
-    setProducts((list) => p.id
-      ? list.map((x) => (x.id === p.id ? { ...x, ...p } : x))
-      : [{ ...p, id: Date.now(), totalSales: 0, status: "Active" }, ...list]);
-
-  // Accepted deducts stock, Returned restores it
-  const setOrderStatus = (orderId, status) => {
-    const order = orders.find((o) => o.id === orderId);
-    if (!order || order.status === status) return null;
-    const delta = (sign) => setProducts((list) => list.map((p) => {
-      const it = order.items.find((i) => i.productId === p.id);
-      return it ? { ...p, currentStock: Math.max(0, p.currentStock + sign * it.qty) } : p;
-    }));
-    if (order.status === "New Order" && status === "Accepted") {
-      const short = order.items.some((i) => (products.find((p) => p.id === i.productId)?.currentStock ?? 0) < i.qty);
-      if (short) return "Not enough stock to accept this order";
-      delta(-1);
-    }
-    if (status === "Returned" && order.status !== "Returned") delta(+1);
-    setOrders((list) => list.map((o) => (o.id === orderId ? { ...o, status } : o)));
-    return null;
+  const saveProduct = async (product) => {
+    const savedProduct = await saveProductRequest(product);
+    setProducts((list) => product.id
+      ? list.map((item) => item.id === savedProduct.id ? savedProduct : item)
+      : [savedProduct, ...list]);
   };
 
-  const resetData = () => { setProducts(seedProducts); setOrders(seedOrders); };
+  const setOrderStatus = async (orderId, status) => {
+    const order = orders.find((o) => o.id === orderId);
+    if (!order || order.status === status) return;
+
+    await updateOrderStatus(orderId, status);
+    setOrders((list) => list.map((item) => item.id === orderId ? { ...item, status } : item));
+
+    let stockChange = 0;
+    if (order.status === "New Order" && status === "Accepted") stockChange = -1;
+    if (status === "Returned" && order.status !== "Returned") stockChange = 1;
+    if (stockChange) {
+      setProducts((list) => list.map((product) => {
+        const item = order.items.find((orderItem) => orderItem.productId === product.id);
+        return item ? { ...product, currentStock: product.currentStock + stockChange * item.qty } : product;
+      }));
+    }
+  };
+
+  const resetData = refreshData;
 
   return (
-    <Ctx.Provider value={{ loggedIn, user, setUser, products, orders, query, setQuery, login, logout, saveProduct, setOrderStatus, resetData }}>
+    <Ctx.Provider value={{
+      loggedIn, user, setUser, products, orders, dataLoading, dataError, refreshData,
+      query, setQuery, login, logout, saveProduct, setOrderStatus, resetData,
+    }}>
       {children}
     </Ctx.Provider>
   );

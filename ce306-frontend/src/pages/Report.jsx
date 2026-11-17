@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useApp } from "../context/AppContext";
 import { Avatar, Card } from "../components/ui";
 import { Bars, Donut, GroupedBars } from "../components/charts";
-import { categoryShare, customers, satisfaction } from "../data/seed";
+import { categoryShare, satisfaction } from "../data/seed";
 import {
   calculateReportRevenue,
   getRevenueBuckets,
@@ -17,6 +17,10 @@ export default function Report() {
 
   const total = calculateReportRevenue(orders);
   const buckets = getRevenueBuckets(orders, range);
+  const customers = [...new Map(orders.map((order) => [
+    order.customerId,
+    { id: order.customerId, ...order.customer },
+  ])).values()];
   const active = getMostActiveCustomers(customers, orders, 4);
 
   return (

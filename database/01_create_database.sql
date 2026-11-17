@@ -1,1 +1,1 @@
-CREATE DATABASE ce306_inventory;
+CREATE DATABASE "Minipro";

@@ -1,26 +1,42 @@
-# CE306 Inventory Management (Frontend mini project)
+# CE306 ระบบจัดการสินค้าคงคลัง (โปรเจกต์ Frontend ขนาดเล็ก)
 
-React + React Router v7 + Tailwind CSS v4 (Vite). No backend: mock data lives in `src/data/seed.js`,
-and changes are saved to the browser's localStorage.
+พัฒนาด้วย React + React Router v7 + Tailwind CSS v4 (Vite) และมี Backend ด้วย Node.js/Express
+ข้อมูลสินค้าและคำสั่งซื้อจะอ่านและบันทึกใน PostgreSQL ผ่าน Backend API
 
-## PostgreSQL database
-SQL files for creating a PostgreSQL database and its inventory tables are in the repository's
-`database` folder. In pgAdmin, run `database/01_create_database.sql` once while connected to a
-server, then connect to the new `ce306_inventory` database and run `database/02_schema.sql`
-followed by `database/03_seed_data.sql` in the Query Tool. The seed script adds sample products,
-customers, orders, and order items, and can be run again safely to restore those sample records.
-The frontend still uses localStorage until a backend is added.
+## ฐานข้อมูล PostgreSQL
+ไฟล์ SQL สำหรับสร้างฐานข้อมูล PostgreSQL และตารางสินค้าคงคลังอยู่ในโฟลเดอร์ `database` ของโปรเจกต์
+ใน pgAdmin ให้เชื่อมต่อกับเซิร์ฟเวอร์แล้วรัน `database/01_create_database.sql` หนึ่งครั้ง
+จากนั้นเชื่อมต่อกับฐานข้อมูล `Minipro` ที่สร้างขึ้น แล้วเปิด Query Tool เพื่อรัน
+`database/02_schema.sql` ตามด้วย `database/03_seed_data.sql`
+สคริปต์เพิ่มข้อมูลตัวอย่างจะเพิ่มสินค้า ลูกค้า คำสั่งซื้อ และรายการสินค้าในคำสั่งซื้อ
+สามารถรันซ้ำได้อย่างปลอดภัยเพื่อเพิ่มข้อมูลตัวอย่างเหล่านี้อีกครั้ง
 
-## Run
-    npm install
-    npm run dev      # http://localhost:5173
+## วิธีติดตั้งและเรียกใช้งาน
+1. สร้างฐานข้อมูลและตารางตามขั้นตอนด้านบน
+2. ที่โฟลเดอร์หลักของโปรเจกต์ ติดตั้ง Backend และตั้งค่าการเชื่อมต่อฐานข้อมูล:
 
-Login: admin@example.com / admin123
+       npm install
+       Copy-Item .env.example .env
 
-## Features
-- Login (mock) + protected routes
-- Dashboard: valuation, stock levels, revenue chart, market demand tabs, top products
-- Inventory: search (header), category filter, add / update product
-- Orders: status filter, change status (Accepted deducts stock, Returned restores it)
-- Report: revenue by month/year, donut chart, active customers, satisfaction chart
-- Settings: profile, password toggle, picture upload, notifications
+   แก้ไขไฟล์ `.env` แล้วใส่รหัสผ่าน PostgreSQL ของคุณใน `PGPASSWORD`
+3. เปิด Terminal แรกที่โฟลเดอร์หลัก แล้วเริ่ม Backend:
+
+       npm run server
+
+4. เปิด Terminal ที่สอง เข้าโฟลเดอร์ `ce306-frontend` แล้วเริ่ม Frontend:
+
+       npm install
+       npm run dev
+
+   เปิดเว็บไซต์ที่ http://localhost:5173
+
+เข้าสู่ระบบด้วยบัญชีตัวอย่าง: admin@example.com / admin123
+การเข้าสู่ระบบและการตั้งค่าโปรไฟล์ยังเป็นข้อมูลจำลองและบันทึกในเบราว์เซอร์
+
+## ฟีเจอร์
+- เข้าสู่ระบบ (ข้อมูลจำลอง) และป้องกันการเข้าถึงหน้าที่กำหนด
+- แดชบอร์ด: มูลค่าสินค้า ระดับสินค้าคงคลัง กราฟรายได้ แท็บความต้องการของตลาด และสินค้าขายดี
+- สินค้าคงคลัง: ค้นหาจากแถบด้านบน กรองตามหมวดหมู่ เพิ่มและแก้ไขสินค้า
+- คำสั่งซื้อ: กรองตามสถานะและเปลี่ยนสถานะ (เมื่อรับคำสั่งซื้อจะตัดสต็อก และเมื่อคืนสินค้าจะเพิ่มสต็อกกลับ)
+- รายงาน: รายได้รายเดือน/รายปี กราฟโดนัท ลูกค้าที่ใช้งานอยู่ และกราฟความพึงพอใจ
+- ตั้งค่า: โปรไฟล์ แสดง/ซ่อนรหัสผ่าน อัปโหลดรูปภาพ และการแจ้งเตือน

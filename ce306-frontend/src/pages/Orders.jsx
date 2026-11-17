@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { useApp } from "../context/AppContext";
-import { customers } from "../data/seed";
 import { Avatar, Badge, Card, PayText, Stat } from "../components/ui";
 import {
   filterOrders,
   getOrderCountByStatus,
   calculateReturnLoss,
-  findCustomerById,
   formatDate,
   formatTime,
 } from "../utils";
@@ -21,6 +19,15 @@ export default function Orders() {
   const rows = filterOrders(orders, filter);
   const count = (s) => getOrderCountByStatus(orders, s);
   const loss = calculateReturnLoss(orders);
+
+  async function changeStatus(orderId, status) {
+    setError("");
+    try {
+      await setOrderStatus(orderId, status);
+    } catch (error) {
+      setError(error.message);
+    }
+  }
 
   return (
     <div className="space-y-4">
@@ -68,7 +75,7 @@ export default function Orders() {
             <thead className="text-brand"><tr>{["Order ID", "Customer", "Order date", "Payment", "Status", "Change status"].map((h) => <th key={h} className="pb-3 pr-3 font-medium">{h}</th>)}</tr></thead>
             <tbody>
               {rows.map((o) => {
-                const c = findCustomerById(customers, o.customerId);
+                const c = o.customer;
                 return (
                   <tr key={o.id} className="border-t border-neutral-200">
                     <td className="py-3 pr-3 font-semibold">{o.id}</td>
@@ -77,7 +84,7 @@ export default function Orders() {
                     <td className="pr-3">${o.total.toFixed(2)}<br /><PayText>{o.payment}</PayText></td>
                     <td className="pr-3"><Badge>{o.status}</Badge></td>
                     <td>
-                      <select aria-label={`Status of ${o.id}`} value={o.status} onChange={(e) => setError(setOrderStatus(o.id, e.target.value) || "")}
+                      <select aria-label={`Status of ${o.id}`} value={o.status} onChange={(e) => changeStatus(o.id, e.target.value)}
                         className="rounded border border-neutral-300 px-2 py-1">{STATUSES.map((s) => <option key={s}>{s}</option>)}</select>
                     </td>
                   </tr>
