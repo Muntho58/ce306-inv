@@ -6,7 +6,20 @@ import { filterProducts, getTopCategory, formatNumber, readFileAsDataURL } from 
 
 const empty = { name: "", sku: "", category: categories[0], currentStock: 0, predictedStock: 0, price: 0, image: "" };
 
-function ProductForm({ initial, onSave, onClose, error, saving }) {
+function generateSku(products) {
+  const usedSkus = new Set(products.map((product) => product.sku.toUpperCase()));
+  const start = Math.floor(Math.random() * 100_000_000);
+
+  for (let offset = 0; offset <= usedSkus.size; offset += 1) {
+    const number = (start + offset) % 100_000_000;
+    const sku = `RT${String(number).padStart(8, "0")}`;
+    if (!usedSkus.has(sku)) return sku;
+  }
+
+  throw new Error("ไม่สามารถสร้าง SKU ที่ไม่ซ้ำได้");
+}
+
+function ProductForm({ initial, products, onSave, onClose, error, saving }) {
   const [f, setF] = useState(initial);
   const [imgError, setImgError] = useState("");
   const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
@@ -50,7 +63,17 @@ function ProductForm({ initial, onSave, onClose, error, saving }) {
         {imgError && <p className="text-xs text-red-600 mt-1">{imgError}</p>}
       </div>
       <label className="block text-sm">Product name<input required className={`${field} mt-1`} value={f.name} onChange={set("name")} /></label>
-      <label className="block text-sm">SKU<input required className={`${field} mt-1`} value={f.sku} onChange={set("sku")} placeholder="RT15246630" /></label>
+      <div>
+        <div className="flex items-center justify-between">
+          <label htmlFor="product-sku" className="block text-sm">SKU</label>
+          {!initial.id && (
+            <button type="button" onClick={() => setF((prev) => ({ ...prev, sku: generateSku(products) }))} className="text-xs font-medium text-brand hover:underline">
+              Generate SKU
+            </button>
+          )}
+        </div>
+        <input id="product-sku" required className={`${field} mt-1`} value={f.sku} onChange={set("sku")} placeholder="RT15246630" />
+      </div>
       <label className="block text-sm">Category
         <select className={`${field} mt-1`} value={f.category} onChange={set("category")}>{categories.map((c) => <option key={c}>{c}</option>)}</select>
       </label>
@@ -89,7 +112,7 @@ export default function Inventory() {
         action={<div className="flex gap-2">
           <select aria-label="Filter by category" value={cat} onChange={(e) => setCat(e.target.value)} className="rounded-full border border-neutral-300 px-3 py-2 text-sm">
             <option>All</option>{categories.map((c) => <option key={c}>{c}</option>)}</select>
-          <button onClick={() => setEditing(empty)} className="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white">Add product</button>
+          <button onClick={() => { setSaveError(""); setEditing({ ...empty, sku: generateSku(products) }); }} className="rounded-full bg-brand px-5 py-2 text-sm font-medium text-white">Add product</button>
         </div>}>
         <div className="overflow-x-auto">
           <table className="w-full min-w-[640px] text-left text-sm">
@@ -123,6 +146,7 @@ export default function Inventory() {
         <Modal title={editing.id ? "Update product" : "Add product"} onClose={() => setEditing(null)}>
           <ProductForm
             initial={editing}
+            products={products}
             onClose={() => setEditing(null)}
             error={saveError}
             saving={saving}
