@@ -20,10 +20,11 @@ function generateSku(products) {
 }
 
 function ProductForm({ initial, products, onSave, onClose, error, saving }) {
-  const [f, setF] = useState(initial);
+  const [f, setF] = useState({ ...initial, price: String(initial.price ?? "") });
   const [imgError, setImgError] = useState("");
-  const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
+  const set = (k) => (e) => setF((prev) => ({ ...prev, [k]: e.target.value }));
   const num = (k) => (e) => setF({ ...f, [k]: Math.max(0, Number(e.target.value)) });
+  const setPrice = (e) => setF((prev) => ({ ...prev, price: e.target.value }));
 
   function pickImage(e) {
     const file = e.target.files?.[0];
@@ -38,7 +39,7 @@ function ProductForm({ initial, products, onSave, onClose, error, saving }) {
   }
 
   return (
-    <form onSubmit={(e) => { e.preventDefault(); onSave({ ...f, name: f.name.trim(), sku: f.sku.trim() }); }} className="space-y-3">
+    <form onSubmit={(e) => { e.preventDefault(); onSave({ ...f, price: Number(f.price), name: f.name.trim(), sku: f.sku.trim() }); }} className="space-y-3">
       <div>
         <label className="block text-sm font-medium mb-1">Product image</label>
         <div className="flex items-center gap-3">
@@ -80,7 +81,7 @@ function ProductForm({ initial, products, onSave, onClose, error, saving }) {
       <div className="grid grid-cols-3 gap-2">
         <label className="block text-sm">Current<input type="number" min="0" className={`${field} mt-1`} value={f.currentStock} onChange={num("currentStock")} /></label>
         <label className="block text-sm">Predicted<input type="number" min="0" className={`${field} mt-1`} value={f.predictedStock} onChange={num("predictedStock")} /></label>
-        <label className="block text-sm">Price ($)<input type="number" min="0" step="0.01" className={`${field} mt-1`} value={f.price} onChange={num("price")} /></label>
+        <label className="block text-sm">Price ($)<input type="number" min="0" step="0.01" required className={`${field} mt-1`} value={f.price} onChange={setPrice} /></label>
       </div>
       {error && <p role="alert" className="text-sm text-red-600">{error}</p>}
       <div className="flex justify-end gap-2 pt-2">
